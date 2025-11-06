@@ -1,64 +1,62 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./EditProfilePage.css";
 
-const EditProfilePage = () => {
+function EditProfilePage() {
+  const navigate = useNavigate();
+
   const [username, setUsername] = useState("");
   const [avatar, setAvatar] = useState("");
   const [bio, setBio] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSave = () => {
+    const existingProfile = JSON.parse(localStorage.getItem("profile")) || {};
 
-    // 🔔 Simulate Save
-    console.log("Profile Saved ✅", {
-      username,
-      avatar,
-      bio,
-    });
+    const updatedProfile = {
+      username: username || existingProfile.username || "you",
+      avatar: avatar || existingProfile.avatar || "https://i.pravatar.cc/40?img=1",
+      bio: bio || existingProfile.bio || "",
+    };
 
-    // 🎉 Simple alert
-    alert("Profile updated successfully!");
+    localStorage.setItem("profile", JSON.stringify(updatedProfile));
 
-    // 💡 Future: backendActor.updateProfile(username, avatar, bio)
+    // ✅ Redirect directly to FeedPage after saving
+    navigate("/feed");
   };
 
   return (
-    <div className="edit-profile-page">
-      <div className="edit-profile-card">
-        <h2>Edit Profile</h2>
-        <form onSubmit={handleSubmit} className="edit-profile-form">
-          <label>
-            Username:
-            <input
-              required
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder="Enter username"
-            />
-          </label>
-          <label>
-            Avatar URL:
-            <input
-              required
-              value={avatar}
-              onChange={(e) => setAvatar(e.target.value)}
-              placeholder="Paste image URL"
-            />
-          </label>
-          <label>
-            Bio:
-            <textarea
-              required
-              value={bio}
-              onChange={(e) => setBio(e.target.value)}
-              placeholder="Write your bio..."
-            />
-          </label>
-          <button type="submit">Save Changes</button>
-        </form>
+    <div className="edit-profile-wrapper">
+      <div className="edit-profile-container">
+        <h2>Edit Your Profile</h2>
+
+        <label>Username</label>
+        <input
+          type="text"
+          placeholder="Enter new username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+
+        <label>Avatar URL</label>
+        <input
+          type="text"
+          placeholder="Paste avatar image link"
+          value={avatar}
+          onChange={(e) => setAvatar(e.target.value)}
+        />
+
+        <label>Bio</label>
+        <textarea
+          placeholder="Tell us about yourself..."
+          value={bio}
+          onChange={(e) => setBio(e.target.value)}
+          rows={4}
+        />
+
+        <button onClick={handleSave}>Save Changes</button>
       </div>
     </div>
   );
-};
+}
 
 export default EditProfilePage;

@@ -19,7 +19,7 @@ const LandingPage = () => {
           <button onClick={() => navigate("/register")}>Register</button>
         </div>
         <p className="creator-tag">
-          Created by <strong>Anisha Jeena</strong> & <strong>Muskan Gedam</strong>
+         
         </p>
       </div>
     </div>

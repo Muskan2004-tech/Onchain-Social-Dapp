@@ -4,7 +4,7 @@
   width: 100vw;
   background: #121212;
   display: flex;
-  justify-content: flex-start;  /* Align left */
+  justify-content: flex-start;
   align-items: flex-start;
 }
 
@@ -17,8 +17,7 @@
   color: #fff;
   overflow-y: auto;
   position: relative;
-
-  margin-left: 2rem;      /* ✅ Start content from left */
+  margin-left: 2rem;
   margin-right: auto;
 }
 
@@ -95,7 +94,7 @@
   background-color: #1e1e1e;
   border-radius: 10px;
   padding: 1rem;
-  margin: 0 0 1rem 0;  /* Aligned to left, no auto margin */
+  margin: 0 0 1rem 0;
   width: 95%;
   max-width: 700px;
 }
@@ -210,4 +209,75 @@
 
 .nav-icon.active {
   color: #00c896;
+}
+
+/* =============================== */
+/* 🔍 Search bar + Follow buttons */
+/* =============================== */
+
+.search-bar {
+  margin-bottom: 1rem;
+  width: 95%;
+  max-width: 700px;
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #1e1e1e;
+  color: #fff;
+  border: 1px solid #333;
+  font-size: 1rem;
+}
+
+.search-results {
+  margin-bottom: 1rem;
+  width: 95%;
+  max-width: 700px;
+}
+
+.search-user-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #222;
+  padding: 0.75rem;
+  border-radius: 8px;
+  margin-top: 0.5rem;
+}
+
+/* Avatar + username */
+.search-user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.search-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Follow buttons */
+.follow-btn,
+.unfollow-btn {
+  padding: 0.4rem 0.9rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  color: #fff;
+  transition: background-color 0.3s ease;
+}
+
+.follow-btn {
+  background-color: #1da1f2;
+}
+
+.unfollow-btn {
+  background-color: #f44336;
 }

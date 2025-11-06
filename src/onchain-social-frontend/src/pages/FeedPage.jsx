@@ -5,6 +5,29 @@ import { useNavigate } from "react-router-dom";
 function FeedPage() {
   const [postContent, setPostContent] = useState("");
   const [visibility, setVisibility] = useState("public");
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const dummyUsers = [
+    {
+      id: 1,
+      username: "muskan",
+      isFollowing: false,
+      avatar: "https://i.pravatar.cc/40?img=10",
+    },
+    {
+      id: 2,
+      username: "anisha",
+      isFollowing: false,
+      avatar: "https://i.pravatar.cc/40?img=20",
+    },
+    {
+      id: 3,
+      username: "devraj",
+      isFollowing: false,
+      avatar: "https://i.pravatar.cc/40?img=30",
+    },
+  ];
+  const [users, setUsers] = useState(dummyUsers);
 
   const [posts, setPosts] = useState([
     {
@@ -90,6 +113,17 @@ function FeedPage() {
     return new Date(timestamp).toLocaleDateString();
   };
 
+  const handleFollowToggle = (userId) => {
+    const updatedUsers = users.map((user) =>
+      user.id === userId ? { ...user, isFollowing: !user.isFollowing } : user
+    );
+    setUsers(updatedUsers);
+  };
+
+  const filteredUsers = users.filter((user) =>
+    user.username.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div className="feed-container">
       <div className="feed-box">
@@ -108,6 +142,44 @@ function FeedPage() {
             <i className="fas fa-paper-plane"></i>
           </div>
         </div>
+
+        {/* 🔍 Search Bar Below Logo */}
+        <div className="search-bar">
+          <input
+            type="text"
+            placeholder="Search users..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
+
+        {/* 🔍 Search Results with Avatar */}
+        {searchQuery && (
+          <div className="search-results">
+            {filteredUsers.length > 0 ? (
+              filteredUsers.map((user) => (
+                <div key={user.id} className="search-user-card">
+                  <div className="search-user-info">
+                    <img
+                      src={user.avatar}
+                      alt={user.username}
+                      className="search-avatar"
+                    />
+                    <span>@{user.username}</span>
+                  </div>
+                  <button
+                    className={user.isFollowing ? "unfollow-btn" : "follow-btn"}
+                    onClick={() => handleFollowToggle(user.id)}
+                  >
+                    {user.isFollowing ? "Unfollow" : "Follow"}
+                  </button>
+                </div>
+              ))
+            ) : (
+              <p>No users found.</p>
+            )}
+          </div>
+        )}
 
         {/* Post Creation */}
         <div className="upload-section">
@@ -182,7 +254,9 @@ function FeedPage() {
                       <button onClick={() => startEdit(post.id, post.content)}>
                         Edit
                       </button>
-                      <button onClick={() => handleDelete(post.id)}>Delete</button>
+                      <button onClick={() => handleDelete(post.id)}>
+                        Delete
+                      </button>
                     </div>
                   )}
                 </>
